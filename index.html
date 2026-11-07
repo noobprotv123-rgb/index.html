@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GODHEAD XIT - iOS</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #ff0055;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 { color: #ff0055; margin-bottom: 20px; }
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        label { font-size: 1.2rem; cursor: pointer; }
+        input[type="checkbox"] {
+            transform: scale(1.5);
+            accent-color: #ff0055;
+            cursor: pointer;
+        }
+        button {
+            background: #ff0055;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover { background: #cc0044; box-shadow: 0 0 15px #ff0055; }
+        #output {
+            margin-top: 20px;
+            background: #000;
+            padding: 10px;
+            word-break: break-all;
+            color: #0f0;
+            font-size: 0.9rem;
+            min-height: 60px;
+            border: 1px dashed #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>GODHEAD XIT</h1>
+    
+    <div class="toggle-container">
+        <label for="neck">Neck HS</label>
+        <input type="checkbox" id="neck" checked onchange="generate()">
+    </div>
+
+    <div class="toggle-container">
+        <label for="head">Head HS</label>
+        <input type="checkbox" id="head" checked onchange="generate()">
+    </div>
+
+    <button onclick="copyToClipboard()">GERAR PROXY</button>
+    
+    <div id="output">Aguardando configuração...</div>
+</div>
+
+<script>
+    function generate() {
+        const neck = document.getElementById('neck').checked;
+        const head = document.getElementById('head').checked;
+        
+        // Aqui é onde a mágica acontece. 
+        // Se você usar um serviço real, você mudaria isso.
+        // Como não temos backend, vamos simular o link de conexão.
+        
+        let status = [];
+        if(neck) status.push("NECK_BOT");
+        if(head) status.push("HEADSHOT_100");
+        
+        // Simulação de um token único gerado pelo "servidor"
+        const fakeToken = Math.random().toString(36).substring(7);
+        
+        const result = `ssh -D 8080 -p 22 user@notrack-proxy.com?token=${fakeToken}&mod=${status.join(',')}`;
+        
+        document.getElementById('output').innerText = result;
+    }
+
+    function copyToClipboard() {
+        const text = document.getElementById('output').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Proxy copiada! Abra o Termux e cole.");
+        });
+    }
+    
+    // Inicializa
+    generate();
+</script>
+
+</body>
+</html>
